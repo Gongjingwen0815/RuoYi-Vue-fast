@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.door.mapper.DoorOpenRecordMapper">
+    
+    <resultMap type="DoorOpenRecord" id="DoorOpenRecordResult">
+        <result property="id"    column="id"    />
+        <result property="recordTime"    column="record_time"    />
+        <result property="contrastingPicture"    column="contrasting_picture"    />
+        <result property="originalPicture"    column="original_picture"    />
+        <result property="compatibility"    column="compatibility"    />
+    </resultMap>
+
+    <sql id="selectDoorOpenRecordVo">
+        select id, record_time, contrasting_picture, original_picture, compatibility from door_open_record
+    </sql>
+
+    <select id="selectDoorOpenRecordList" parameterType="DoorOpenRecord" resultMap="DoorOpenRecordResult">
+        <include refid="selectDoorOpenRecordVo"/>
+        <where>  
+            <if test="recordTime != null "> and record_time = #{recordTime}</if>
+            <if test="contrastingPicture != null  and contrastingPicture != ''"> and contrasting_picture = #{contrastingPicture}</if>
+            <if test="originalPicture != null  and originalPicture != ''"> and original_picture = #{originalPicture}</if>
+            <if test="compatibility != null "> and compatibility = #{compatibility}</if>
+        </where>
+    </select>
+    
+    <select id="selectDoorOpenRecordById" parameterType="Integer" resultMap="DoorOpenRecordResult">
+        <include refid="selectDoorOpenRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDoorOpenRecord" parameterType="DoorOpenRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into door_open_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordTime != null">record_time,</if>
+            <if test="contrastingPicture != null and contrastingPicture != ''">contrasting_picture,</if>
+            <if test="originalPicture != null and originalPicture != ''">original_picture,</if>
+            <if test="compatibility != null">compatibility,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordTime != null">#{recordTime},</if>
+            <if test="contrastingPicture != null and contrastingPicture != ''">#{contrastingPicture},</if>
+            <if test="originalPicture != null and originalPicture != ''">#{originalPicture},</if>
+            <if test="compatibility != null">#{compatibility},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDoorOpenRecord" parameterType="DoorOpenRecord">
+        update door_open_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordTime != null">record_time = #{recordTime},</if>
+            <if test="contrastingPicture != null and contrastingPicture != ''">contrasting_picture = #{contrastingPicture},</if>
+            <if test="originalPicture != null and originalPicture != ''">original_picture = #{originalPicture},</if>
+            <if test="compatibility != null">compatibility = #{compatibility},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDoorOpenRecordById" parameterType="Integer">
+        delete from door_open_record where id = #{id}
+    </delete>
+
+    <delete id="deleteDoorOpenRecordByIds" parameterType="String">
+        delete from door_open_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
