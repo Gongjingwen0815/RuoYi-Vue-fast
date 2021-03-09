@@ -9,12 +9,12 @@ import com.ruoyi.framework.aspectj.lang.annotation.Excel;
 import com.ruoyi.framework.web.domain.BaseEntity;
 
 /**
- * 【请填写功能名称】对象 door_open_record
+ * 【进出记录】对象 door_open_record
  * 
  * @author ruoyi
  * @date 2021-03-04
  */
-public class DoorOpenRecord extends BaseEntity
+public class DoorOpenRecord
 {
     private static final long serialVersionUID = 1L;
 

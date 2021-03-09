@@ -19,7 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectUserInfoList" parameterType="com.ruoyi.project.door.domain.UserInfo" resultMap="UserInfoResult">
         <include refid="selectUserInfoVo"/>
-        <where>  
+        <where>
+            <if test="id != null" >and id = #{id}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
             <if test="originalPicture != null  and originalPicture != ''"> and original_picture = #{originalPicture}</if>

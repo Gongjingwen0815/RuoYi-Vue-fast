@@ -18,7 +18,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectDoorOpenRecordList" parameterType="DoorOpenRecord" resultMap="DoorOpenRecordResult">
         <include refid="selectDoorOpenRecordVo"/>
-        <where>  
+        <where>
+            <if test="id != null">and id = #{id}</if>
             <if test="recordTime != null "> and record_time = #{recordTime}</if>
             <if test="contrastingPicture != null  and contrastingPicture != ''"> and contrasting_picture = #{contrastingPicture}</if>
             <if test="originalPicture != null  and originalPicture != ''"> and original_picture = #{originalPicture}</if>

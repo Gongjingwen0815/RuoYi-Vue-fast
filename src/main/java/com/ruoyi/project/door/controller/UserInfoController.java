@@ -1,19 +1,17 @@
 package com.ruoyi.project.door.controller;
 
+import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.project.door.config.util.AddImg;
 import com.ruoyi.project.door.domain.UserInfo;
 import com.ruoyi.project.door.service.IUserInfoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 
@@ -21,27 +19,29 @@ import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.web.page.TableDataInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 【请填写功能名称】Controller
- * 
+ * 【用户】Controller
+ *
  * @author ruoyi
  * @date 2021-03-04
  */
 @RestController
 @RequestMapping("/door/userinfo")
-public class UserInfoController extends BaseController
-{
+@Api(tags = "用户信息")
+public class UserInfoController extends BaseController {
     @Autowired
     private IUserInfoService userInfoService;
+    AddImg addImg = new AddImg();
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询【用户】列表
      */
-        @PreAuthorize("@ss.hasPermi('system:info:list')")
+    @PreAuthorize("@ss.hasPermi('system:info:list')")
     @GetMapping("/list")
-    public TableDataInfo list(UserInfo userInfo)
-    {
+    @ApiOperation("员工列表")
+    public TableDataInfo list(UserInfo userInfo) {
         startPage();
         List<UserInfo> list = userInfoService.selectUserInfoList(userInfo);
         return getDataTable(list);
@@ -53,8 +53,7 @@ public class UserInfoController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:info:export')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
-    public AjaxResult export(UserInfo userInfo)
-    {
+    public AjaxResult export(UserInfo userInfo) {
         List<UserInfo> list = userInfoService.selectUserInfoList(userInfo);
         ExcelUtil<UserInfo> util = new ExcelUtil<UserInfo>(UserInfo.class);
         return util.exportExcel(list, "info");
@@ -65,19 +64,22 @@ public class UserInfoController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:info:query')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Integer id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Integer id) {
         return AjaxResult.success(userInfoService.selectUserInfoById(id));
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增【用户】姓名 性别 原始图片
+     * 前端人员操作时deadline是有效日期
      */
     @PreAuthorize("@ss.hasPermi('system:info:add')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
+    @Log(title = "【用户新增】", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody UserInfo userInfo)
-    {
+    @ApiOperation("添加用户信息")
+    public AjaxResult add(@RequestParam("file") MultipartFile file, @Validated UserInfo userInfo, @RequestParam("deadline") Long deadline) {
+        addImg.AddUpdateImg(userInfo, file);
+        userInfo.setStartTime(new Date());
+        userInfo.setEndTime(new Date(userInfo.getStartTime().getTime() + deadline));
         return toAjax(userInfoService.insertUserInfo(userInfo));
     }
 
@@ -87,19 +89,18 @@ public class UserInfoController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:info:edit')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody UserInfo userInfo)
-    {
+    public AjaxResult edit(@RequestBody UserInfo userInfo) {
         return toAjax(userInfoService.updateUserInfo(userInfo));
     }
 
     /**
-     * 删除【请填写功能名称】
+     * 删除【用户信息】
      */
     @PreAuthorize("@ss.hasPermi('system:info:remove')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Integer[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    @ApiOperation("删除此用户信息")
+    public AjaxResult remove(@PathVariable Integer[] ids) {
         return toAjax(userInfoService.deleteUserInfoByIds(ids));
     }
 }

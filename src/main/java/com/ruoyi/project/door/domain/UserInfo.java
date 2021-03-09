@@ -13,7 +13,7 @@ import com.ruoyi.framework.web.domain.BaseEntity;
  * @author ruoyi
  * @date 2021-03-04
  */
-public class UserInfo extends BaseEntity
+public class UserInfo
 {
     private static final long serialVersionUID = 1L;
 
