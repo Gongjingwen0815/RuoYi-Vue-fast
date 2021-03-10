@@ -24,6 +24,10 @@ public class UserInfo
     @Excel(name = "姓名")
     private String name;
 
+    /** 编号 */
+    @Excel(name = "编号")
+    private Integer number;
+
     /** 性别 */
     @Excel(name = "性别")
     private String sex;
@@ -46,62 +50,66 @@ public class UserInfo
     {
         this.id = id;
     }
-
     public Integer getId() 
     {
         return id;
     }
+
     public void setName(String name) 
     {
         this.name = name;
     }
-
     public String getName() 
     {
         return name;
     }
+
+    public Integer getNumber() { return number; }
+    public void setNumber(Integer number) { this.number = number; }
+
     public void setSex(String sex) 
     {
         this.sex = sex;
     }
-
     public String getSex() 
     {
         return sex;
     }
+
     public void setOriginalPicture(String originalPicture) 
     {
         this.originalPicture = originalPicture;
     }
-
     public String getOriginalPicture() 
     {
         return originalPicture;
     }
+
     public void setStartTime(Date startTime) 
     {
         this.startTime = startTime;
     }
-
     public Date getStartTime() 
     {
         return startTime;
     }
+
     public void setEndTime(Date endTime) 
     {
         this.endTime = endTime;
     }
-
     public Date getEndTime() 
     {
         return endTime;
     }
+
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("name", getName())
+             .append("number", getNumber())
             .append("sex", getSex())
             .append("originalPicture", getOriginalPicture())
             .append("startTime", getStartTime())
