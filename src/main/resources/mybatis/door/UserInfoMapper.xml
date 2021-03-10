@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>
             <if test="id != null" >and id = #{id}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="number != null">and number = #{number}</if>
             <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
             <if test="originalPicture != null  and originalPicture != ''"> and original_picture = #{originalPicture}</if>
             <if test="startTime != null "> and start_time = #{startTime}</if>
@@ -40,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">name,</if>
             <if test="sex != null and sex != ''">sex,</if>
+            <if test="number != null">number,</if>
             <if test="originalPicture != null and originalPicture != ''">original_picture,</if>
             <if test="startTime != null">start_time,</if>
             <if test="endTime != null">end_time,</if>
@@ -47,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">#{name},</if>
             <if test="sex != null and sex != ''">#{sex},</if>
+            <if test="number != null">#{number},</if>
             <if test="originalPicture != null and originalPicture != ''">#{originalPicture},</if>
             <if test="startTime != null">#{startTime},</if>
             <if test="endTime != null">#{endTime},</if>
@@ -58,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null and name != ''">name = #{name},</if>
             <if test="sex != null and sex != ''">sex = #{sex},</if>
+            <if test="number != null">number = #{number},</if>
             <if test="originalPicture != null and originalPicture != ''">original_picture = #{originalPicture},</if>
             <if test="startTime != null">start_time = #{startTime},</if>
             <if test="endTime != null">end_time = #{endTime},</if>

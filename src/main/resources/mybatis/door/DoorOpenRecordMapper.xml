@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.door.mapper.DoorOpenRecordMapper">
     
-    <resultMap type="DoorOpenRecord" id="DoorOpenRecordResult">
+    <resultMap type="com.ruoyi.project.door.domain.DoorOpenRecord" id="DoorOpenRecordResult">
         <result property="id"    column="id"    />
         <result property="number" column="number" />
         <result property="recordTime"    column="record_time"    />
@@ -17,10 +17,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, record_time, contrasting_picture, original_picture, compatibility from door_open_record
     </sql>
 
-    <select id="selectDoorOpenRecordList" parameterType="DoorOpenRecord" resultMap="DoorOpenRecordResult">
+    <select id="selectDoorOpenRecordList" parameterType="com.ruoyi.project.door.domain.DoorOpenRecord" resultMap="DoorOpenRecordResult">
         <include refid="selectDoorOpenRecordVo"/>
         <where>
             <if test="id != null">and id = #{id}</if>
+            <if test="number != null">and number = #{number}</if>
             <if test="recordTime != null "> and record_time = #{recordTime}</if>
             <if test="contrastingPicture != null  and contrastingPicture != ''"> and contrasting_picture = #{contrastingPicture}</if>
             <if test="originalPicture != null  and originalPicture != ''"> and original_picture = #{originalPicture}</if>
@@ -33,15 +34,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
         
-    <insert id="insertDoorOpenRecord" parameterType="DoorOpenRecord" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertDoorOpenRecord" parameterType="com.ruoyi.project.door.domain.DoorOpenRecord" useGeneratedKeys="true" keyProperty="id">
         insert into door_open_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
             <if test="recordTime != null">record_time,</if>
             <if test="contrastingPicture != null and contrastingPicture != ''">contrasting_picture,</if>
             <if test="originalPicture != null and originalPicture != ''">original_picture,</if>
             <if test="compatibility != null">compatibility,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
             <if test="recordTime != null">#{recordTime},</if>
             <if test="contrastingPicture != null and contrastingPicture != ''">#{contrastingPicture},</if>
             <if test="originalPicture != null and originalPicture != ''">#{originalPicture},</if>
@@ -49,9 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateDoorOpenRecord" parameterType="DoorOpenRecord">
+    <update id="updateDoorOpenRecord" parameterType="com.ruoyi.project.door.domain.DoorOpenRecord">
         update door_open_record
         <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null"> number = #{number},</if>
             <if test="recordTime != null">record_time = #{recordTime},</if>
             <if test="contrastingPicture != null and contrastingPicture != ''">contrasting_picture = #{contrastingPicture},</if>
             <if test="originalPicture != null and originalPicture != ''">original_picture = #{originalPicture},</if>
