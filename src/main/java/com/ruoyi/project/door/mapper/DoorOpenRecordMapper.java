@@ -2,6 +2,8 @@ package com.ruoyi.project.door.mapper;
 
 import com.ruoyi.project.door.domain.DoorOpenRecord;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 
 
@@ -14,7 +16,7 @@ import java.util.List;
 public interface DoorOpenRecordMapper 
 {
 
-    Integer selectDoorPeople();
+    Integer selectDoorPeople(String startTime, String endTime);
 
     /**
      * 查询【请填写功能名称】

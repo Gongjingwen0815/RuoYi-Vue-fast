@@ -2,6 +2,8 @@ package com.ruoyi.project.door.service;
 
 import com.ruoyi.project.door.domain.DoorOpenRecord;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,7 +19,7 @@ public interface IDoorOpenRecordService
      * 今日识别人数
      * @return
      */
-    Integer selectDoorPeople();
+    Integer selectDoorPeople(String startTime, String endTime);
 
     /**
      * 查询【请填写功能名称】

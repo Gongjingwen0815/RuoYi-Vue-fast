@@ -1,5 +1,7 @@
 package com.ruoyi.project.door.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.project.door.domain.DoorOpenRecord;
@@ -26,8 +28,8 @@ public class DoorOpenRecordServiceImpl implements IDoorOpenRecordService
      * @return
      */
     @Override
-    public Integer selectDoorPeople() {
-        return doorOpenRecordMapper.selectDoorPeople();
+    public Integer selectDoorPeople(String startTime, String endTime) {
+        return doorOpenRecordMapper.selectDoorPeople(startTime,endTime);
     }
 
     /**

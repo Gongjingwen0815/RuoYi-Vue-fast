@@ -1,5 +1,7 @@
 package com.ruoyi.project.door.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.project.door.config.util.AddImg;
@@ -19,6 +21,8 @@ import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.xml.crypto.Data;
 
 /**
  * 【请填写功能名称】Controller
@@ -43,8 +47,11 @@ public class DoorOpenRecordController extends BaseController
     @ApiOperation("查询进出记录")
     public Integer doorpeople()
     {
-
-        return doorOpenRecordService.selectDoorPeople();
+        Date startTime = new Date();
+        Date endTime = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd 23:59:59");
+        return doorOpenRecordService.selectDoorPeople(simpleDateFormat.format(startTime),simpleDateFormat1.format(endTime));
     }
 
 

@@ -17,8 +17,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, record_time,number,contrasting_picture, original_picture, compatibility,end_time from door_open_record
     </sql>
 
-    <select id="selectDoorPeople" resultType="integer">
-        select count(id) from door_open_record
+    <select id="selectDoorPeople" resultType="integer" parameterType="String">
+        select count(id) from door_open_record where
     </select>
 
     <select id="selectDoorOpenRecordList" parameterType="com.ruoyi.project.door.domain.DoorOpenRecord" resultMap="DoorOpenRecordResult">
