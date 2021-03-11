@@ -42,6 +42,7 @@ public class DoorOpenRecordController extends BaseController
     @ApiOperation("查询进出记录")
     public TableDataInfo list(DoorOpenRecord doorOpenRecord)
     {
+        //根据userId,得到用户的名字 底图 进出
         startPage();
         List<DoorOpenRecord> list = doorOpenRecordService.selectDoorOpenRecordList(doorOpenRecord);
         return getDataTable(list);
@@ -77,9 +78,10 @@ public class DoorOpenRecordController extends BaseController
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增进出记录")
-    public AjaxResult add(@Validated DoorOpenRecord doorOpenRecord,@RequestParam("originalFile") MultipartFile originalFile,@RequestParam("newFile") MultipartFile newFile)
+    public AjaxResult add(@Validated DoorOpenRecord doorOpenRecord,@RequestParam("newFile") MultipartFile newFile)
     {
-        addImg.AddRecordImg(doorOpenRecord,originalFile,newFile);
+        //把抓拍图存在指定路径下，然后把路径存在数据库中
+        addImg.AddRecordImg(doorOpenRecord,newFile);
         return toAjax(doorOpenRecordService.insertDoorOpenRecord(doorOpenRecord));
     }
 
