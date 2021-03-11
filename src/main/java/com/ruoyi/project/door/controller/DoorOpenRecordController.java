@@ -29,7 +29,7 @@ import javax.xml.crypto.Data;
 
 /**
  * 【请填写功能名称】Controller
- * 
+ *
  * @author ruoyi
  * @date 2021-03-04
  */
@@ -41,7 +41,8 @@ public class DoorOpenRecordController extends BaseController
     @Autowired
     private IDoorOpenRecordService doorOpenRecordService;
     AddImg addImg = new AddImg();
-
+    @Autowired
+    private IUserInfoService iUserInfoService;
     /**
      * 查询【进出记录】列表
      */
@@ -52,9 +53,9 @@ public class DoorOpenRecordController extends BaseController
     {
         Date startTime = new Date();
         Date endTime = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
-        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd 23:59:59");
-        return doorOpenRecordService.selectDoorPeople(simpleDateFormat.format(startTime),simpleDateFormat1.format(endTime));
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy  00:00:00");
+        SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy 23:59:59");
+        return doorOpenRecordService.selectDoorPeople(formatter.format(startTime),formatter1.format(endTime));
     }
 
 
@@ -63,12 +64,11 @@ public class DoorOpenRecordController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:record:list')")
     @GetMapping("/list")
-    @ApiOperation("查询进出记录")
-    public TableDataInfo list(DoorOpenRecord doorOpenRecord)
+    @ApiOperation("查询进出记录列表")
+    public TableDataInfo list(DoorOpenRecordVo doorOpenRecord)
     {
-        //根据userId,得到用户的名字 底图 进出
         startPage();
-        List<DoorOpenRecord> list = doorOpenRecordService.selectDoorOpenRecordList(doorOpenRecord);
+        List<DoorOpenRecordVo> list = doorOpenRecordService.selectDoorOpenRecordList(doorOpenRecord);
         return getDataTable(list);
     }
 
@@ -140,7 +140,7 @@ public class DoorOpenRecordController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:record:remove')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Integer[] ids)
     {
         return toAjax(doorOpenRecordService.deleteDoorOpenRecordByIds(ids));

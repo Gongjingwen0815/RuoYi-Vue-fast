@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <select id="selectDoorPeople" resultType="integer" parameterType="String">
-        select count(id) from door_open_record where
+        select count(id) from door_open_record where record_time > #{startTime} and record_time &lt; #{endTime}
     </select>
 
     <select id="selectDoorOpenRecordList" parameterType="com.ruoyi.project.door.domain.vo.DoorOpenRecordVo" resultMap="DoorOpenRecordAndUserInfoResult">
