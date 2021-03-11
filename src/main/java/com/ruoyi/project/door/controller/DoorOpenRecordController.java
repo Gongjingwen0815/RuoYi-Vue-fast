@@ -1,10 +1,14 @@
 package com.ruoyi.project.door.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.project.door.config.util.AddImg;
 import com.ruoyi.project.door.domain.DoorOpenRecord;
+import com.ruoyi.project.door.domain.UserInfo;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo;
 import com.ruoyi.project.door.service.IDoorOpenRecordService;
+import com.ruoyi.project.door.service.IUserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,7 +38,8 @@ public class DoorOpenRecordController extends BaseController
     @Autowired
     private IDoorOpenRecordService doorOpenRecordService;
     AddImg addImg = new AddImg();
-
+    @Autowired
+    private IUserInfoService iUserInfoService;
     /**
      * 查询【进出记录】列表
      */
@@ -53,12 +58,11 @@ public class DoorOpenRecordController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:record:list')")
     @GetMapping("/list")
-    @ApiOperation("查询进出记录")
-    public TableDataInfo list(DoorOpenRecord doorOpenRecord)
+    @ApiOperation("查询进出记录列表")
+    public TableDataInfo list(DoorOpenRecordVo doorOpenRecord)
     {
-        //根据userId,得到用户的名字 底图 进出
         startPage();
-        List<DoorOpenRecord> list = doorOpenRecordService.selectDoorOpenRecordList(doorOpenRecord);
+        List<DoorOpenRecordVo> list = doorOpenRecordService.selectDoorOpenRecordList(doorOpenRecord);
         return getDataTable(list);
     }
 
@@ -68,10 +72,10 @@ public class DoorOpenRecordController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:record:export')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @GetMapping("/export")
-    public AjaxResult export(DoorOpenRecord doorOpenRecord)
+    public AjaxResult export(DoorOpenRecordVo doorOpenRecord)
     {
-        List<DoorOpenRecord> list = doorOpenRecordService.selectDoorOpenRecordList(doorOpenRecord);
-        ExcelUtil<DoorOpenRecord> util = new ExcelUtil<DoorOpenRecord>(DoorOpenRecord.class);
+        List<DoorOpenRecordVo> list = doorOpenRecordService.selectDoorOpenRecordList(doorOpenRecord);
+        ExcelUtil<DoorOpenRecordVo> util = new ExcelUtil<DoorOpenRecordVo>(DoorOpenRecordVo.class);
         return util.exportExcel(list, "record");
     }
 
@@ -92,8 +96,23 @@ public class DoorOpenRecordController extends BaseController
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
     @ApiOperation("新增进出记录")
-    public AjaxResult add(@Validated DoorOpenRecord doorOpenRecord,@RequestParam("newFile") MultipartFile newFile)
+    public AjaxResult add(@Validated DoorOpenRecord doorOpenRecord, @RequestParam("newFile") MultipartFile newFile, UserInfo userInfo)
     {
+        String originalPicture = null;
+        Long deadline = 10*24*60*60*1000L;
+        //得到传过来的这个工号
+        Integer number = doorOpenRecord.getNumber();
+        //把工号传到userInfo
+        userInfo.setNumber(number);
+        //根据工号从userInfo中查询这个人的底片
+        List<UserInfo> userInfos = iUserInfoService.selectUserInfoList(userInfo);
+        for (UserInfo userInfo1:userInfos) {
+            originalPicture = userInfo1.getOriginalPicture();
+        }
+        //把工号对应的底片添加到记录表中
+        doorOpenRecord.setOriginalPicture(originalPicture);
+        doorOpenRecord.setRecordTime(new Date());
+        doorOpenRecord.setEndTime(new Date(doorOpenRecord.getRecordTime().getTime() + deadline));
         //把抓拍图存在指定路径下，然后把路径存在数据库中
         addImg.AddRecordImg(doorOpenRecord,newFile);
         return toAjax(doorOpenRecordService.insertDoorOpenRecord(doorOpenRecord));

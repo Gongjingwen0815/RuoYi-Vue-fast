@@ -3,6 +3,7 @@ package com.ruoyi.project.door.service.impl;
 import java.util.List;
 
 import com.ruoyi.project.door.domain.DoorOpenRecord;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo;
 import com.ruoyi.project.door.mapper.DoorOpenRecordMapper;
 import com.ruoyi.project.door.service.IDoorOpenRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class DoorOpenRecordServiceImpl implements IDoorOpenRecordService
      * @return 【请填写功能名称】
      */
     @Override
-    public List<DoorOpenRecord> selectDoorOpenRecordList(DoorOpenRecord doorOpenRecord)
+    public List<DoorOpenRecordVo> selectDoorOpenRecordList(DoorOpenRecordVo doorOpenRecord)
     {
         return doorOpenRecordMapper.selectDoorOpenRecordList(doorOpenRecord);
     }

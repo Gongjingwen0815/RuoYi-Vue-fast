@@ -12,25 +12,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="compatibility"    column="compatibility"    />
         <result property="endTime" column="end_time"  />
     </resultMap>
+    <resultMap type="com.ruoyi.project.door.domain.vo.DoorOpenRecordVo" id="DoorOpenRecordAndUserInfoResult">
+        <result property="name"    column="name"    />
+        <result property="number" column="number" />
+        <result property="recordTime"    column="record_time"    />
+        <result property="contrastingPicture"    column="contrasting_picture"    />
+        <result property="originalPicture"    column="original_picture"    />
+        <result property="compatibility"    column="compatibility"    />
+    </resultMap>
 
     <sql id="selectDoorOpenRecordVo">
         select id, record_time,number,contrasting_picture, original_picture, compatibility,end_time from door_open_record
+    </sql>
+    <sql id="selectDoorOpenRecordAndUserInfoVo">
+        select  u.number,u.`name`,d.record_time,d.original_picture,d.contrasting_picture,d.compatibility
+        from door_open_record d
     </sql>
 
     <select id="selectDoorPeople" resultType="integer">
         select count(id) from door_open_record
     </select>
 
-    <select id="selectDoorOpenRecordList" parameterType="com.ruoyi.project.door.domain.DoorOpenRecord" resultMap="DoorOpenRecordResult">
-        <include refid="selectDoorOpenRecordVo"/>
+    <select id="selectDoorOpenRecordList" parameterType="com.ruoyi.project.door.domain.vo.DoorOpenRecordVo" resultMap="DoorOpenRecordAndUserInfoResult">
+        <include refid="selectDoorOpenRecordAndUserInfoVo"/>
+        LEFT JOIN user_info u ON d.number = u.number
         <where>
-            <if test="id != null">and id = #{id}</if>
-            <if test="number != null">and number = #{number}</if>
+            <if test="name != null and name != ''">and name = #{name}</if>
+            <if test="number != null">and u.number = #{number}</if>
             <if test="recordTime != null "> and record_time = #{recordTime}</if>
             <if test="contrastingPicture != null  and contrastingPicture != ''"> and contrasting_picture = #{contrastingPicture}</if>
             <if test="originalPicture != null  and originalPicture != ''"> and original_picture = #{originalPicture}</if>
             <if test="compatibility != null "> and compatibility = #{compatibility}</if>
-            <if test="endTime != null and endTime != ''">and end_time = #{endTime}</if>
         </where>
     </select>
     
@@ -47,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="contrastingPicture != null and contrastingPicture != ''">contrasting_picture,</if>
             <if test="originalPicture != null and originalPicture != ''">original_picture,</if>
             <if test="compatibility != null">compatibility,</if>
-            <if test="endTime != null and endTime != ''">end_time,</if>
+            <if test="endTime != null">end_time,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="number != null">#{number},</if>
@@ -55,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="contrastingPicture != null and contrastingPicture != ''">#{contrastingPicture},</if>
             <if test="originalPicture != null and originalPicture != ''">#{originalPicture},</if>
             <if test="compatibility != null">#{compatibility},</if>
-            <if test="endTime != null and endTime != ''">#{endTime},</if>
+            <if test="endTime != null">#{endTime},</if>
          </trim>
     </insert>
 

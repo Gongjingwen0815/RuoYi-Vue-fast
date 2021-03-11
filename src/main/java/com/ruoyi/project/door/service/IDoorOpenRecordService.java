@@ -1,6 +1,7 @@
 package com.ruoyi.project.door.service;
 
 import com.ruoyi.project.door.domain.DoorOpenRecord;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public interface IDoorOpenRecordService
      * @param doorOpenRecord 【请填写功能名称】
      * @return 【请填写功能名称】集合
      */
-    public List<DoorOpenRecord> selectDoorOpenRecordList(DoorOpenRecord doorOpenRecord);
+    public List<DoorOpenRecordVo> selectDoorOpenRecordList(DoorOpenRecordVo doorOpenRecord);
 
     /**
      * 新增【请填写功能名称】
