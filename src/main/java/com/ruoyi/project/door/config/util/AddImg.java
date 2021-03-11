@@ -42,14 +42,14 @@ public class AddImg {
     /**
      * 进出记录的图片
      * @param doorOpenRecord
-     * @param file
+     * @param
      */
-    public void AddRecordImg(DoorOpenRecord doorOpenRecord, MultipartFile file,MultipartFile newFile) {
+    public void AddRecordImg(DoorOpenRecord doorOpenRecord,MultipartFile newFile) {
         try {
             /**
              * 上传图片
              */
-            String filePath = "E:\\eCloud\\RuoYi-Vue-fast\\src\\main\\resources\\webapp\\images";
+            /*String filePath = "E:\\eCloud\\RuoYi-Vue-fast\\src\\main\\resources\\webapp\\images";
             //获取原始图片的拓展名 即原来的文件名在客户机的文件系统名称  就是你要上传的图片在电脑中的名字
             String originalFilename = file.getOriginalFilename();
             System.out.println("originalFilename"+originalFilename);
@@ -60,11 +60,11 @@ public class AddImg {
             System.out.println("targetFile"+targetFile);//targetFileE:\eCloud\blog-test\test\src\main\webapp\images\71bbd566-1c64-45e0-8b6c-4929582ef47bQQ图片20200726223852.png
             //把本地文件  上传到 封装上传文件位置的全路径 主要把MultipartFile转换为File
             file.transferTo(targetFile);
-            doorOpenRecord.setOriginalPicture(filePath+"\\"+newFileName);
+            doorOpenRecord.setOriginalPicture(filePath+"\\"+newFileName);*/
 
             String newFilePath = "E:\\eCloud\\RuoYi-Vue-fast\\src\\main\\resources\\webapp\\newImages";
             //获取原始图片的拓展名 即原来的文件名在客户机的文件系统名称  就是你要上传的图片在电脑中的名字
-            String newOriginalFilename = file.getOriginalFilename();
+            String newOriginalFilename = newFile.getOriginalFilename();
             System.out.println("originalFilename"+newOriginalFilename);
             //新的文件名字  在你图片原始名字的前面添加随机数 不会出现名字重复的问题
             String newNewFileName = UUID.randomUUID() + newOriginalFilename;

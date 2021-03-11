@@ -32,8 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="compatibility != null "> and compatibility = #{compatibility}</if>
         </where>
     </select>
-
-
+    
     <select id="selectDoorOpenRecordById" parameterType="Integer" resultMap="DoorOpenRecordResult">
         <include refid="selectDoorOpenRecordVo"/>
         where id = #{id}
