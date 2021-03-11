@@ -54,6 +54,17 @@ public class DoorOpenRecord {
     @Excel(name = "契合度")
     private BigDecimal compatibility;
 
+    /**
+     * 截止日期
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "截止日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date endTime;
+
+    public Date getEndTime() { return endTime; }
+    public void setEndTime(Date endTime) { this.endTime = endTime; }
+
+
     public void setId(Integer id) { this.id = id; }
 
     public Integer getId() {
@@ -107,6 +118,7 @@ public class DoorOpenRecord {
                 .append("contrastingPicture", getContrastingPicture())
                 .append("originalPicture", getOriginalPicture())
                 .append("compatibility", getCompatibility())
+                .append("endTime",getEndTime())
                 .toString();
     }
 }
