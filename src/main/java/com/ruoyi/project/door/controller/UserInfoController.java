@@ -35,6 +35,18 @@ public class UserInfoController extends BaseController {
     private IUserInfoService userInfoService;
     AddImg addImg = new AddImg();
 
+
+    /**
+     * 查询有效人数
+     */
+    @PreAuthorize("@ss.hasPermi('system:info:usernumber')")
+    @GetMapping("/UserNumber")
+    @ApiOperation("有效人数")
+    public Integer usernumber() {
+        Integer list = userInfoService.selectUserNumber();
+        return list;
+    }
+
     /**
      * 查询【用户】列表
      */
@@ -67,6 +79,8 @@ public class UserInfoController extends BaseController {
     public AjaxResult getInfo(@PathVariable("id") Integer id) {
         return AjaxResult.success(userInfoService.selectUserInfoById(id));
     }
+
+
 
     /**
      * 新增【用户】姓名 性别 原始图片

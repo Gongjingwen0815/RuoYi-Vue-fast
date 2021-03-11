@@ -6,13 +6,19 @@ import java.util.List;
 
 
 /**
- * 【请填写功能名称】Service接口
+ * 用户信息Service接口
  * 
  * @author ruoyi
  * @date 2021-03-04
  */
-public interface IUserInfoService 
+public interface IUserInfoService
 {
+    /**
+     * 查询有效人数
+     * @return
+     */
+    Integer selectUserNumber();
+
     /**
      * 查询【请填写功能名称】
      * 

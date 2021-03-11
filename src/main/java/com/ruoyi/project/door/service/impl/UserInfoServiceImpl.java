@@ -22,6 +22,15 @@ public class UserInfoServiceImpl implements IUserInfoService
     private UserInfoMapper userInfoMapper;
 
     /**
+     *查询有效人数
+     * @return
+     */
+    @Override
+    public Integer selectUserNumber() {
+        return userInfoMapper.selectUserNumber();
+    }
+
+    /**
      * 查询【请填写功能名称】
      * 
      * @param id 【请填写功能名称】ID

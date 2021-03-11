@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 /**
- * 【请填写功能名称】Service业务层处理
+ * 进出记录 Service业务层处理
  * 
  * @author ruoyi
  * @date 2021-03-04
@@ -20,6 +20,15 @@ public class DoorOpenRecordServiceImpl implements IDoorOpenRecordService
 {
     @Autowired
     private DoorOpenRecordMapper doorOpenRecordMapper;
+
+    /**
+     * 今日识别人数
+     * @return
+     */
+    @Override
+    public Integer selectDoorPeople() {
+        return doorOpenRecordMapper.selectDoorPeople();
+    }
 
     /**
      * 查询【请填写功能名称】

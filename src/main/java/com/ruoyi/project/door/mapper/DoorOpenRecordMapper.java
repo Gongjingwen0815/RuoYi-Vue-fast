@@ -6,13 +6,16 @@ import java.util.List;
 
 
 /**
- * 【请填写功能名称】Mapper接口
+ * 进出记录Mapper接口
  * 
  * @author ruoyi
  * @date 2021-03-04
  */
 public interface DoorOpenRecordMapper 
 {
+
+    Integer selectDoorPeople();
+
     /**
      * 查询【请填写功能名称】
      * 

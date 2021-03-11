@@ -34,6 +34,20 @@ public class DoorOpenRecordController extends BaseController
     @Autowired
     private IDoorOpenRecordService doorOpenRecordService;
     AddImg addImg = new AddImg();
+
+    /**
+     * 查询【进出记录】列表
+     */
+    @PreAuthorize("@ss.hasPermi('system:record:doorpeople')")
+    @GetMapping("/DoorPeople")
+    @ApiOperation("查询进出记录")
+    public Integer doorpeople()
+    {
+
+        return doorOpenRecordService.selectDoorPeople();
+    }
+
+
     /**
      * 查询【进出记录】列表
      */

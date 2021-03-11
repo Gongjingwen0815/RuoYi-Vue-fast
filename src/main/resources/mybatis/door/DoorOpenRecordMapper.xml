@@ -14,8 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectDoorOpenRecordVo">
-        select id, record_time, contrasting_picture, original_picture, compatibility from door_open_record
+        select id, record_time,number,contrasting_picture, original_picture, compatibility from door_open_record
     </sql>
+
+    <select id="selectDoorPeople" resultType="integer">
+        select count(id) from door_open_record
+    </select>
 
     <select id="selectDoorOpenRecordList" parameterType="com.ruoyi.project.door.domain.DoorOpenRecord" resultMap="DoorOpenRecordResult">
         <include refid="selectDoorOpenRecordVo"/>
@@ -28,7 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="compatibility != null "> and compatibility = #{compatibility}</if>
         </where>
     </select>
-    
+
+
     <select id="selectDoorOpenRecordById" parameterType="Integer" resultMap="DoorOpenRecordResult">
         <include refid="selectDoorOpenRecordVo"/>
         where id = #{id}

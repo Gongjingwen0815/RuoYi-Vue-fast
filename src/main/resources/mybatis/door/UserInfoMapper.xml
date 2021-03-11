@@ -15,8 +15,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectUserInfoVo">
-        select id, name, sex, original_picture, start_time, end_time from user_info
+        select id, name, number,sex, original_picture, start_time, end_time from user_info
     </sql>
+
+    <select id="selectUserNumber" resultType="integer">
+        select count(id) from user_info
+    </select>
+
 
     <select id="selectUserInfoList" parameterType="com.ruoyi.project.door.domain.UserInfo" resultMap="UserInfoResult">
         <include refid="selectUserInfoVo"/>
