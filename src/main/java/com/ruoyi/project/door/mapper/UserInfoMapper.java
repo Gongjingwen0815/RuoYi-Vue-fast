@@ -2,6 +2,7 @@ package com.ruoyi.project.door.mapper;
 
 
 import com.ruoyi.project.door.domain.UserInfo;
+import com.ruoyi.project.door.domain.vo.UserInfoVo;
 
 import java.util.List;
 
@@ -28,6 +29,11 @@ public interface UserInfoMapper
      UserInfo selectUserInfoById(Integer id);
 
     /**
+     * 根据创建时间排序
+     * @return
+     */
+     List<UserInfo> selectAllOrderByStartTime();
+    /**
      * 查询【请填写功能名称】列表
      * 
      * @param userInfo 【请填写功能名称】
@@ -35,6 +41,11 @@ public interface UserInfoMapper
      */
      List<UserInfo> selectUserInfoList(UserInfo userInfo);
 
+    /**
+     * 查询这条用户信息的名字和截止日期 单位为天
+     * @return
+     */
+    List<UserInfoVo> selectUserDeadline();
     /**
      * 新增【请填写功能名称】
      * 

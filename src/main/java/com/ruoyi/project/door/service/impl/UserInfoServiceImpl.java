@@ -3,6 +3,7 @@ package com.ruoyi.project.door.service.impl;
 import java.util.List;
 
 import com.ruoyi.project.door.domain.UserInfo;
+import com.ruoyi.project.door.domain.vo.UserInfoVo;
 import com.ruoyi.project.door.mapper.UserInfoMapper;
 import com.ruoyi.project.door.service.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,11 @@ public class UserInfoServiceImpl implements IUserInfoService
         return userInfoMapper.selectUserInfoById(id);
     }
 
+    @Override
+    public List<UserInfo> selectAllOrderByStartTime() {
+        return userInfoMapper.selectAllOrderByStartTime();
+    }
+
     /**
      * 查询【请填写功能名称】列表
      * 
@@ -52,6 +58,15 @@ public class UserInfoServiceImpl implements IUserInfoService
     public List<UserInfo> selectUserInfoList(UserInfo userInfo)
     {
         return userInfoMapper.selectUserInfoList(userInfo);
+    }
+
+    /**
+     * 查询用户的截止日期
+     * @return 用户名和截止日期
+     */
+    @Override
+    public List<UserInfoVo> selectUserDeadline() {
+        return userInfoMapper.selectUserDeadline();
     }
 
     /**

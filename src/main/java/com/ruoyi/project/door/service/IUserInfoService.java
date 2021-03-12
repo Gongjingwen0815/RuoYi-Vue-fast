@@ -1,6 +1,7 @@
 package com.ruoyi.project.door.service;
 
 import com.ruoyi.project.door.domain.UserInfo;
+import com.ruoyi.project.door.domain.vo.UserInfoVo;
 
 import java.util.List;
 
@@ -26,7 +27,11 @@ public interface IUserInfoService
      * @return 【请填写功能名称】
      */
     public UserInfo selectUserInfoById(Integer id);
-
+    /**
+     * 根据创建时间排序
+     * @return
+     */
+    public List<UserInfo> selectAllOrderByStartTime();
     /**
      * 查询【请填写功能名称】列表
      * 
@@ -35,6 +40,11 @@ public interface IUserInfoService
      */
     public List<UserInfo> selectUserInfoList(UserInfo userInfo);
 
+    /**
+     * 查询这条用户信息的名字和截止日期 单位为天
+     * @return
+     */
+    public List<UserInfoVo> selectUserDeadline();
     /**
      * 新增【请填写功能名称】
      * 

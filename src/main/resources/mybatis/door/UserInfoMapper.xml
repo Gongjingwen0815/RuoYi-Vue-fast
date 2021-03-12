@@ -40,7 +40,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectUserInfoVo"/>
         where id = #{id}
     </select>
-        
+<!--    根据创建时间将用户信息表排序只取前4条数据-->
+    <select id="selectAllOrderByStartTime" resultMap="UserInfoResult">
+        SELECT * FROM user_info
+        ORDER BY start_time desc
+        limit 4
+    </select>
+<!--    查询用户到期时间 单位为天 前6条-->
+    <select id="selectUserDeadline" resultType="com.ruoyi.project.door.domain.vo.UserInfoVo">
+        SELECT name,TIMESTAMPDIFF(DAY,NOW(),end_time) deadline
+        FROM user_info
+        WHERE TIMESTAMPDIFF(DAY,NOW(),end_time) > 0
+        ORDER BY deadline
+        LIMIT 6
+    </select>
     <insert id="insertUserInfo" parameterType="com.ruoyi.project.door.domain.UserInfo" useGeneratedKeys="true" keyProperty="id">
         insert into user_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

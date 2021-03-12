@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ruoyi.project.door.config.util.AddImg;
 import com.ruoyi.project.door.domain.UserInfo;
+import com.ruoyi.project.door.domain.vo.UserInfoVo;
 import com.ruoyi.project.door.service.IUserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -117,4 +118,30 @@ public class UserInfoController extends BaseController {
     public AjaxResult remove(@PathVariable Integer[] ids) {
         return toAjax(userInfoService.deleteUserInfoByIds(ids));
     }
+
+    /**
+     * 根据创建时间排序只取前四条数据
+     */
+    @PreAuthorize("@ss.hasPermi('system:info:usernumber')")
+    @GetMapping("/selectAllOrderByStartTime")
+    @ApiOperation("根据创建时间排序")
+    public TableDataInfo selectAllOrderByStartTime() {
+        startPage();
+        List<UserInfo> userInfos = userInfoService.selectAllOrderByStartTime();
+        return getDataTable(userInfos);
+    }
+
+    /**
+     * 查询用户的姓名和截止期限大于0天  取前6条数据
+     */
+    @PreAuthorize("@ss.hasPermi('system:info:usernumber')")
+    @GetMapping("/selectUserDeadline")
+    @ApiOperation("查询用户的姓名和截止期限")
+    public TableDataInfo selectUserDeadline() {
+        startPage();
+        List<UserInfoVo> userInfos = userInfoService.selectUserDeadline();
+        System.out.println(userInfos);
+        return getDataTable(userInfos);
+    }
+
 }
