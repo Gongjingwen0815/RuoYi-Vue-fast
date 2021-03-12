@@ -116,4 +116,9 @@ public class UserInfoServiceImpl implements IUserInfoService
     {
         return userInfoMapper.deleteUserInfoById(id);
     }
+
+    @Override
+    public int updateUserInfoByIds(Integer[] ids) {
+        return userInfoMapper.updateUserInfoByIds(ids);
+    }
 }

@@ -11,11 +11,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="sex"    column="sex"    />
         <result property="originalPicture"    column="original_picture"    />
         <result property="startTime"    column="start_time"    />
+        <result property="isDelete"    column="is_delete"    />
         <result property="endTime"    column="end_time"    />
     </resultMap>
 
     <sql id="selectUserInfoVo">
-        select id, name, number,sex, original_picture, start_time, end_time from user_info
+        select id, name, number,sex, original_picture, start_time, end_time , is_delete from user_info
     </sql>
 
     <select id="selectUserNumber" resultType="integer">
@@ -29,10 +30,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null" >and id = #{id}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="number != null">and number = #{number}</if>
-            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="sex != null"> and sex = #{sex}</if>
             <if test="originalPicture != null  and originalPicture != ''"> and original_picture = #{originalPicture}</if>
             <if test="startTime != null "> and start_time = #{startTime}</if>
             <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="isDelete != null">and is_delete = #{isDelete}</if>
         </where>
     </select>
     
@@ -58,19 +60,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into user_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">name,</if>
-            <if test="sex != null and sex != ''">sex,</if>
+            <if test="sex != null">sex,</if>
             <if test="number != null">number,</if>
             <if test="originalPicture != null and originalPicture != ''">original_picture,</if>
             <if test="startTime != null">start_time,</if>
             <if test="endTime != null">end_time,</if>
+            <if test="isDelete != null">is_delete,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">#{name},</if>
-            <if test="sex != null and sex != ''">#{sex},</if>
+            <if test="sex != null">#{sex},</if>
             <if test="number != null">#{number},</if>
             <if test="originalPicture != null and originalPicture != ''">#{originalPicture},</if>
             <if test="startTime != null">#{startTime},</if>
             <if test="endTime != null">#{endTime},</if>
+            <if test="isDelete != null">#{isDelete},</if>
          </trim>
     </insert>
 
@@ -78,11 +82,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update user_info
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null and name != ''">name = #{name},</if>
-            <if test="sex != null and sex != ''">sex = #{sex},</if>
+            <if test="sex != null">sex = #{sex},</if>
             <if test="number != null">number = #{number},</if>
             <if test="originalPicture != null and originalPicture != ''">original_picture = #{originalPicture},</if>
             <if test="startTime != null">start_time = #{startTime},</if>
             <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
         </trim>
         where id = #{id}
     </update>
@@ -97,4 +102,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <update id="updateUserInfoByIds" parameterType="String">
+        update user_info set is_delete = 1
+        where id in
+        <foreach item="id"  collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
 </mapper>

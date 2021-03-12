@@ -76,4 +76,10 @@ public interface IUserInfoService
      * @return 结果
      */
     public int deleteUserInfoById(Integer id);
+    /**
+     * 逻辑删除
+     * @param ids
+     * @return
+     */
+    public int updateUserInfoByIds(Integer[] ids);
 }

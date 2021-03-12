@@ -1,5 +1,7 @@
 package com.ruoyi.project.door.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -56,8 +58,20 @@ public class UserInfoController extends BaseController {
     @ApiOperation("员工列表")
     public TableDataInfo list(UserInfo userInfo) {
         startPage();
-        List<UserInfo> list = userInfoService.selectUserInfoList(userInfo);
-        return getDataTable(list);
+        userInfo.setIsDelete(0);
+        List<UserInfo> userInfosList = userInfoService.selectUserInfoList(userInfo);
+        //如果截止时间小于当前时间，进行逻辑删除
+        for (UserInfo userInfo1 : userInfosList) {
+            Date endTime = userInfo1.getEndTime();
+            Date nowTime = new Date();
+            int i = endTime.compareTo(nowTime);
+            //如果i<0 则已经到了截止时间 可以删除该信息
+            if (i < 0) {
+                userInfo1.setIsDelete(1);
+                userInfoService.updateUserInfo(userInfo1);
+            }
+        }
+        return getDataTable(userInfosList);
     }
 
     /**
@@ -80,7 +94,6 @@ public class UserInfoController extends BaseController {
     public AjaxResult getInfo(@PathVariable("id") Integer id) {
         return AjaxResult.success(userInfoService.selectUserInfoById(id));
     }
-
 
 
     /**
@@ -109,14 +122,19 @@ public class UserInfoController extends BaseController {
     }
 
     /**
-     * 删除【用户信息】
+     * 删除【用户信息】进行逻辑删除
      */
     @PreAuthorize("@ss.hasPermi('system:info:remove')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     @ApiOperation("删除此用户信息")
-    public AjaxResult remove(@PathVariable Integer[] ids) {
-        return toAjax(userInfoService.deleteUserInfoByIds(ids));
+    public AjaxResult remove(@PathVariable("ids") Integer[] ids) {
+        /*for (Integer id:ids) {
+            userInfo.setId(id);
+            userInfo.setIsDelete(1);
+            return toAjax(userInfoService.updateUserInfo(userInfo));
+        }*/
+        return toAjax(userInfoService.updateUserInfoByIds(ids));
     }
 
     /**

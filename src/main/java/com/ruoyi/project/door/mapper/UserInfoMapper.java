@@ -3,6 +3,8 @@ package com.ruoyi.project.door.mapper;
 
 import com.ruoyi.project.door.domain.UserInfo;
 import com.ruoyi.project.door.domain.vo.UserInfoVo;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -77,4 +79,11 @@ public interface UserInfoMapper
      * @return 结果
      */
      int deleteUserInfoByIds(Integer[] ids);
+
+    /**
+     * 逻辑删除
+     * @param ids
+     * @return
+     */
+     public int updateUserInfoByIds(Integer[] ids);
 }

@@ -37,7 +37,7 @@ public class UserInfoVo {
      * 性别
      */
     @Excel(name = "性别")
-    private String sex;
+    private Integer sex;
 
     /**
      * 底片
@@ -97,11 +97,11 @@ public class UserInfoVo {
         this.number = number;
     }
 
-    public void setSex(String sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 
-    public String getSex() {
+    public Integer getSex() {
         return sex;
     }
 
