@@ -1,7 +1,9 @@
 package com.ruoyi.project.door.mapper;
 
 import com.ruoyi.project.door.domain.DoorOpenRecord;
+import com.ruoyi.project.door.domain.bo.DoorOpenRecordBo;
 import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo1;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
@@ -16,8 +18,14 @@ import java.util.List;
  */
 public interface DoorOpenRecordMapper 
 {
+    /**
+     * 查询每个小时的识别人数
+     * @param doorOpenRecordBo
+     * @return
+     */
+   Integer selectDoorPeopleFor(DoorOpenRecordBo doorOpenRecordBo);
 
-    Integer selectDoorPeople(String startTime, String endTime);
+    Integer selectDoorPeople();
 
     /**
      * 查询【请填写功能名称】

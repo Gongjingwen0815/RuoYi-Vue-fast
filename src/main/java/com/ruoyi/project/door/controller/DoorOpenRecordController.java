@@ -7,7 +7,9 @@ import java.util.List;
 import com.ruoyi.project.door.config.util.AddImg;
 import com.ruoyi.project.door.domain.DoorOpenRecord;
 import com.ruoyi.project.door.domain.UserInfo;
+import com.ruoyi.project.door.domain.bo.DoorOpenRecordBo;
 import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo1;
 import com.ruoyi.project.door.service.IDoorOpenRecordService;
 import com.ruoyi.project.door.service.IUserInfoService;
 import io.swagger.annotations.Api;
@@ -43,19 +45,28 @@ public class DoorOpenRecordController extends BaseController
     AddImg addImg = new AddImg();
     @Autowired
     private IUserInfoService iUserInfoService;
+
     /**
-     * 查询【进出记录】列表
+     * 查询每个小时的识别人数
+     * @return
+     */
+    @PreAuthorize("@ss.hasPermi('system:record:doorpeoplefor')")
+    @GetMapping("/DoorPeopleFor")
+    @ApiOperation("查询进出记录")
+    public List<DoorOpenRecordVo1> doorpeoplefor()
+    {
+        return doorOpenRecordService.selectDoorPeopleFor();
+    }
+
+    /**
+     * 今日识别人数
      */
     @PreAuthorize("@ss.hasPermi('system:record:doorpeople')")
     @GetMapping("/DoorPeople")
     @ApiOperation("查询进出记录")
     public Integer doorpeople()
     {
-        Date startTime = new Date();
-        Date endTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy  00:00:00");
-        SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MM-yyyy 23:59:59");
-        return doorOpenRecordService.selectDoorPeople(formatter.format(startTime),formatter1.format(endTime));
+        return doorOpenRecordService.selectDoorPeople();
     }
 
 

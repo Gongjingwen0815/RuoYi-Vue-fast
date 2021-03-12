@@ -1,11 +1,15 @@
 package com.ruoyi.project.door.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.project.door.domain.DoorOpenRecord;
+import com.ruoyi.project.door.domain.bo.DoorOpenRecordBo;
 import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo1;
 import com.ruoyi.project.door.mapper.DoorOpenRecordMapper;
 import com.ruoyi.project.door.service.IDoorOpenRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +28,63 @@ public class DoorOpenRecordServiceImpl implements IDoorOpenRecordService
     @Autowired
     private DoorOpenRecordMapper doorOpenRecordMapper;
 
+
     /**
      * 今日识别人数
      * @return
      */
     @Override
-    public Integer selectDoorPeople(String startTime, String endTime) {
-        return doorOpenRecordMapper.selectDoorPeople(startTime,endTime);
+    public Integer selectDoorPeople() {
+        return doorOpenRecordMapper.selectDoorPeople();
+    }
+
+    /**
+     * 查询每个小时的识别人数
+     * @return
+     */
+    @Override
+    public List<DoorOpenRecordVo1> selectDoorPeopleFor() {
+
+        List<DoorOpenRecordVo1> doorOpenRecordVo = new ArrayList<DoorOpenRecordVo1>();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        System.out.println(calendar.getTime().toLocaleString());
+
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.set(Calendar.HOUR_OF_DAY,0);
+        calendar1.set(Calendar.MINUTE,59);
+        calendar1.set(Calendar.SECOND,59);
+        System.out.println(calendar1.getTime().toLocaleString());
+
+        //String date = year + "-" + month + "-" + day + " 00:00:00";
+
+        for(int i = 0;i <=22;i ++) {
+
+            DoorOpenRecordVo1 doorOpenRecordVo1 = new DoorOpenRecordVo1();
+            DoorOpenRecordBo doorOpenRecordBo = new DoorOpenRecordBo();
+
+            calendar.add(Calendar.HOUR,1);
+            calendar1.add(Calendar.HOUR,1);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            String startTime = sdf.format(calendar.getTime());
+            String endTime = sdf.format(calendar1.getTime());
+
+            doorOpenRecordBo.setStartDate(startTime);
+            doorOpenRecordBo.setEndDate(endTime);
+            int count = doorOpenRecordMapper.selectDoorPeopleFor(doorOpenRecordBo);
+
+            doorOpenRecordVo1.setStartDate(startTime);
+            doorOpenRecordVo1.setNumber(count);
+            doorOpenRecordVo1.setEndDate(endTime);
+            doorOpenRecordVo.add(doorOpenRecordVo1);
+        }
+
+        return doorOpenRecordVo;
     }
 
     /**
