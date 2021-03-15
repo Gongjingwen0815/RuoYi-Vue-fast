@@ -16,8 +16,7 @@ public class DoorOpenRecordLimitVo {
     /**
      * 记录时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date recordTime;
+    private String recordTime;
 
     /**
      * 契合度
@@ -32,11 +31,11 @@ public class DoorOpenRecordLimitVo {
         this.name = name;
     }
 
-    public Date getRecordTime() {
+    public String getRecordTime() {
         return recordTime;
     }
 
-    public void setRecordTime(Date recordTime) {
+    public void setRecordTime(String recordTime) {
         this.recordTime = recordTime;
     }
 

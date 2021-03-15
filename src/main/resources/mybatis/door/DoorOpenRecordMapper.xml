@@ -20,6 +20,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="originalPicture"    column="original_picture"    />
         <result property="compatibility"    column="compatibility"    />
     </resultMap>
+    <resultMap type="com.ruoyi.project.door.domain.vo.DoorOpenRecordLimitVo" id="DoorOpen">
+        <result property="name" column="name"></result>
+        <result property="recordTime" column="record_time" ></result>
+        <result property="compatibility" column="compatibility"></result>
+    </resultMap>
 
     <sql id="selectDoorOpenRecordVo">
         select id, record_time,number,contrasting_picture, original_picture, compatibility,end_time from door_open_record
@@ -41,8 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          select COUNT(id) from door_open_record where to_days(record_time) = to_days(now());
     </select>
 
-    <select id="selectDoorLimit" resultType="com.ruoyi.project.door.domain.vo.DoorOpenRecordLimitVo">
-        select u.`name`,d.record_time,d.compatibility
+    <select id="selectDoorLimit" resultMap="DoorOpen">
+        select u.name,record_time,d.compatibility
         from door_open_record d
         LEFT JOIN user_info u ON d.number = u.number
         where to_days(record_time) = to_days(now()) ORDER BY record_time DESC LIMIT 6
@@ -111,7 +116,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
-    <insert id="">
-
-    </insert>
 </mapper>
