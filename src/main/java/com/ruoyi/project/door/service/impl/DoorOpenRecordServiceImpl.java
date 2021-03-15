@@ -51,13 +51,11 @@ public class DoorOpenRecordServiceImpl implements IDoorOpenRecordService
         calendar.set(Calendar.HOUR_OF_DAY,0);
         calendar.set(Calendar.MINUTE,0);
         calendar.set(Calendar.SECOND,0);
-        System.out.println(calendar.getTime().toLocaleString());
 
         Calendar calendar1 = Calendar.getInstance();
         calendar1.set(Calendar.HOUR_OF_DAY,0);
         calendar1.set(Calendar.MINUTE,59);
         calendar1.set(Calendar.SECOND,59);
-        System.out.println(calendar1.getTime().toLocaleString());
 
         //String date = year + "-" + month + "-" + day + " 00:00:00";
 
