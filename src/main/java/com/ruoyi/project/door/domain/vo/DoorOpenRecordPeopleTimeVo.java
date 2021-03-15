@@ -1,6 +1,6 @@
 package com.ruoyi.project.door.domain.vo;
 
-public class DoorOpenRecordVo1 {
+public class DoorOpenRecordPeopleTimeVo {
 
     private Integer number;
 

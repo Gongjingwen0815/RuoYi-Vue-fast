@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from door_open_record d
     </sql>
 
-    <select id="selectDoorPeopleFor" parameterType="com.ruoyi.project.door.domain.bo.DoorOpenRecordBo" resultType="integer">
+    <select id="selectDoorPeopleTime" parameterType="com.ruoyi.project.door.domain.bo.DoorOpenRecordBo" resultType="integer">
         select count(id) from door_open_record
         <where>
             record_time BETWEEN (select #{startDate})
@@ -40,6 +40,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectDoorPeople" resultType="integer" >
          select COUNT(id) from door_open_record where to_days(record_time) = to_days(now());
     </select>
+
+    <select id="selectDoorLimit" resultType="com.ruoyi.project.door.domain.vo.DoorOpenRecordLimitVo">
+        <include refid="selectDoorOpenRecordVo"></include> LIMIT 6
+    </select>
+
 
     <select id="selectDoorOpenRecordList" parameterType="com.ruoyi.project.door.domain.vo.DoorOpenRecordVo" resultMap="DoorOpenRecordAndUserInfoResult">
         <include refid="selectDoorOpenRecordAndUserInfoVo"/>

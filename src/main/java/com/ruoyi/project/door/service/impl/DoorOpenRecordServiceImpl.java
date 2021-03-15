@@ -3,13 +3,13 @@ package com.ruoyi.project.door.service.impl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.project.door.domain.DoorOpenRecord;
 import com.ruoyi.project.door.domain.bo.DoorOpenRecordBo;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordLimitVo;
 import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo;
-import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo1;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordPeopleTimeVo;
 import com.ruoyi.project.door.mapper.DoorOpenRecordMapper;
 import com.ruoyi.project.door.service.IDoorOpenRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +39,22 @@ public class DoorOpenRecordServiceImpl implements IDoorOpenRecordService
     }
 
     /**
+     * 获取前六条识别记录
+     * @return
+     */
+    @Override
+    public List<DoorOpenRecordLimitVo> selectDoorLimit() {
+        return doorOpenRecordMapper.selectDoorLimit();
+    }
+
+    /**
      * 查询每个小时的识别人数
      * @return
      */
     @Override
-    public List<DoorOpenRecordVo1> selectDoorPeopleFor() {
+    public List<DoorOpenRecordPeopleTimeVo> selectDoorPeopleFor() {
 
-        List<DoorOpenRecordVo1> doorOpenRecordVo = new ArrayList<DoorOpenRecordVo1>();
+        List<DoorOpenRecordPeopleTimeVo> doorOpenRecordVo = new ArrayList<DoorOpenRecordPeopleTimeVo>();
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY,0);
@@ -61,7 +70,7 @@ public class DoorOpenRecordServiceImpl implements IDoorOpenRecordService
 
         for(int i = 0;i <=22;i ++) {
 
-            DoorOpenRecordVo1 doorOpenRecordVo1 = new DoorOpenRecordVo1();
+            DoorOpenRecordPeopleTimeVo doorOpenRecordPeopleTimeVo = new DoorOpenRecordPeopleTimeVo();
             DoorOpenRecordBo doorOpenRecordBo = new DoorOpenRecordBo();
 
             calendar.add(Calendar.HOUR,1);
@@ -74,12 +83,12 @@ public class DoorOpenRecordServiceImpl implements IDoorOpenRecordService
 
             doorOpenRecordBo.setStartDate(startTime);
             doorOpenRecordBo.setEndDate(endTime);
-            int count = doorOpenRecordMapper.selectDoorPeopleFor(doorOpenRecordBo);
+            int count = doorOpenRecordMapper.selectDoorPeopleTime(doorOpenRecordBo);
 
-            doorOpenRecordVo1.setStartDate(startTime);
-            doorOpenRecordVo1.setNumber(count);
-            doorOpenRecordVo1.setEndDate(endTime);
-            doorOpenRecordVo.add(doorOpenRecordVo1);
+            doorOpenRecordPeopleTimeVo.setStartDate(startTime);
+            doorOpenRecordPeopleTimeVo.setNumber(count);
+            doorOpenRecordPeopleTimeVo.setEndDate(endTime);
+            doorOpenRecordVo.add(doorOpenRecordPeopleTimeVo);
         }
 
         return doorOpenRecordVo;

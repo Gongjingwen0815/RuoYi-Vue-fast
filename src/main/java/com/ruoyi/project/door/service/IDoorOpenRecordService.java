@@ -1,12 +1,10 @@
 package com.ruoyi.project.door.service;
 
 import com.ruoyi.project.door.domain.DoorOpenRecord;
-import com.ruoyi.project.door.domain.bo.DoorOpenRecordBo;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordLimitVo;
 import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo;
-import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo1;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordPeopleTimeVo;
 
-import javax.xml.crypto.Data;
-import java.util.Date;
 import java.util.List;
 
 
@@ -22,13 +20,19 @@ public interface IDoorOpenRecordService
      * 查询每个小时的识别人数
      * @return
      */
-    List<DoorOpenRecordVo1> selectDoorPeopleFor();
+    List<DoorOpenRecordPeopleTimeVo> selectDoorPeopleFor();
 
     /**
      * 今日识别人数
      * @return
      */
     Integer selectDoorPeople();
+
+    /**
+     * 获取前六条识别记录
+     * @return
+     */
+    List<DoorOpenRecordLimitVo> selectDoorLimit();
 
     /**
      * 查询【请填写功能名称】

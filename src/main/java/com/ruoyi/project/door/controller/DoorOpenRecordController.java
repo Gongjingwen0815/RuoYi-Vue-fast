@@ -1,15 +1,14 @@
 package com.ruoyi.project.door.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.project.door.config.util.AddImg;
 import com.ruoyi.project.door.domain.DoorOpenRecord;
 import com.ruoyi.project.door.domain.UserInfo;
-import com.ruoyi.project.door.domain.bo.DoorOpenRecordBo;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordLimitVo;
 import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo;
-import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo1;
+import com.ruoyi.project.door.domain.vo.DoorOpenRecordPeopleTimeVo;
 import com.ruoyi.project.door.service.IDoorOpenRecordService;
 import com.ruoyi.project.door.service.IUserInfoService;
 import io.swagger.annotations.Api;
@@ -26,8 +25,6 @@ import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.web.page.TableDataInfo;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.xml.crypto.Data;
 
 /**
  * 【请填写功能名称】Controller
@@ -50,12 +47,13 @@ public class DoorOpenRecordController extends BaseController
      * 查询每个小时的识别人数
      * @return
      */
-    @PreAuthorize("@ss.hasPermi('system:record:doorpeoplefor')")
-    @GetMapping("/DoorPeopleFor")
-    @ApiOperation("查询进出记录")
-    public List<DoorOpenRecordVo1> doorpeoplefor()
+    @PreAuthorize("@ss.hasPermi('system:record:doorpeopletime')")
+    @GetMapping("/DoorPeopleTime")
+    @ApiOperation("查询每个小时的识别人数")
+    public AjaxResult doorpeopletime()
     {
-        return doorOpenRecordService.selectDoorPeopleFor();
+        List<DoorOpenRecordPeopleTimeVo> list =  doorOpenRecordService.selectDoorPeopleFor();
+        return AjaxResult.success(list);
     }
 
     /**
@@ -63,12 +61,25 @@ public class DoorOpenRecordController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:record:doorpeople')")
     @GetMapping("/DoorPeople")
-    @ApiOperation("查询进出记录")
-    public Integer doorpeople()
+    @ApiOperation("今日识别人数")
+    public AjaxResult doorpeople()
     {
-        return doorOpenRecordService.selectDoorPeople();
+        Integer integer = doorOpenRecordService.selectDoorPeople();
+        return AjaxResult.success(integer);
     }
 
+
+    /**
+     * 获取前六条识别记录
+     */
+    @PreAuthorize("@ss.hasPermi('system:record:doorpeoplelimit')")
+    @GetMapping("/DoorPeopleLimit")
+    @ApiOperation("获取前六条识别记录")
+    public AjaxResult doorpeoplelimit()
+    {
+        List<DoorOpenRecordLimitVo> list =  doorOpenRecordService.selectDoorLimit();
+        return AjaxResult.success(list);
+    }
 
     /**
      * 查询【进出记录】列表
