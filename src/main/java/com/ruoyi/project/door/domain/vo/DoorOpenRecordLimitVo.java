@@ -16,7 +16,7 @@ public class DoorOpenRecordLimitVo {
     /**
      * 记录时间
      */
-    private String recordTime;
+    private Date recordTime;
 
     /**
      * 契合度
@@ -31,11 +31,11 @@ public class DoorOpenRecordLimitVo {
         this.name = name;
     }
 
-    public String getRecordTime() {
+    public Date getRecordTime() {
         return recordTime;
     }
 
-    public void setRecordTime(String recordTime) {
+    public void setRecordTime(Date recordTime) {
         this.recordTime = recordTime;
     }
 

@@ -3,6 +3,7 @@ package com.ruoyi.project.door.service.impl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.project.door.domain.DoorOpenRecord;
@@ -12,6 +13,7 @@ import com.ruoyi.project.door.domain.vo.DoorOpenRecordVo;
 import com.ruoyi.project.door.domain.vo.DoorOpenRecordPeopleTimeVo;
 import com.ruoyi.project.door.mapper.DoorOpenRecordMapper;
 import com.ruoyi.project.door.service.IDoorOpenRecordService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +47,24 @@ public class DoorOpenRecordServiceImpl implements IDoorOpenRecordService
     @Override
     public List<DoorOpenRecordLimitVo> selectDoorLimit() {
         return doorOpenRecordMapper.selectDoorLimit();
+    }
+
+    /**
+     * 测试类
+     * @return
+     */
+    @Override
+    public String insertTest(Integer integer) {
+        DoorOpenRecord doorOpenRecord = new DoorOpenRecord();
+        for(int i = 0;i <integer;i ++){
+            Date date = new Date();
+            Date date2 = new Date(date.getTime() + 1000*60*30*i);
+
+            doorOpenRecord.setRecordTime(date2);
+            doorOpenRecordMapper.insertDoorOpenRecord(doorOpenRecord);
+
+        }
+        return "success";
     }
 
     /**

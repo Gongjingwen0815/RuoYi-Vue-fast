@@ -45,7 +45,6 @@ public class DoorOpenRecordController extends BaseController
 
     /**
      * 查询每个小时的识别人数
-     * @return
      */
     @PreAuthorize("@ss.hasPermi('system:record:doorpeopletime')")
     @GetMapping("/DoorPeopleTime")
@@ -78,6 +77,18 @@ public class DoorOpenRecordController extends BaseController
     public AjaxResult doorpeoplelimit()
     {
         List<DoorOpenRecordLimitVo> list =  doorOpenRecordService.selectDoorLimit();
+        return AjaxResult.success(list);
+    }
+
+    /**
+     * test
+     */
+    @PreAuthorize("@ss.hasPermi('system:record:test')")
+    @PostMapping("/Test")
+    @ApiOperation("test")
+    public AjaxResult test(Integer integer)
+    {
+        String list = doorOpenRecordService.insertTest(integer);
         return AjaxResult.success(list);
     }
 

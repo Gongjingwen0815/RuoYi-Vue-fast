@@ -35,6 +35,12 @@ public interface IDoorOpenRecordService
     List<DoorOpenRecordLimitVo> selectDoorLimit();
 
     /**
+     * 测试类
+     * @return
+     */
+    String insertTest(Integer integer);
+
+    /**
      * 查询【请填写功能名称】
      * 
      * @param id 【请填写功能名称】ID
