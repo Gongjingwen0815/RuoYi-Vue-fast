@@ -1,5 +1,6 @@
 package com.ruoyi.project.door.service.impl;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,10 +58,14 @@ public class DoorOpenRecordServiceImpl implements IDoorOpenRecordService
     public String insertTest(Integer integer) {
         DoorOpenRecord doorOpenRecord = new DoorOpenRecord();
         for(int i = 0;i <integer;i ++){
+            BigDecimal bigDecimal = new BigDecimal("0.55");
             Date date = new Date();
             Date date2 = new Date(date.getTime() + 1000*60*30*i);
-
+            doorOpenRecord.setNumber(9 + i);
             doorOpenRecord.setRecordTime(date2);
+            doorOpenRecord.setContrastingPicture("a");
+            doorOpenRecord.setOriginalPicture("a");
+            doorOpenRecord.setCompatibility(bigDecimal);
             doorOpenRecordMapper.insertDoorOpenRecord(doorOpenRecord);
 
         }
