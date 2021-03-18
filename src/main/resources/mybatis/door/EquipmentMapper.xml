@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.mapper.EquipmentMapper">
+    
+    <resultMap type="Equipment" id="EquipmentResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="ipAddress"    column="IP_address"    />
+        <result property="creatTime"    column="creat_time"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="identifyWays"    column="identify_ways"    />
+        <result property="faceLibrary"    column="face_library"    />
+        <result property="isLiving"    column="is_living"    />
+        <result property="infraredCamera"    column="infrared_camera"    />
+        <result property="snap"    column="snap"    />
+        <result property="similarity"    column="similarity"    />
+        <result property="synchronizationTime"    column="synchronization_time"    />
+        <result property="heartbeatTime"    column="heartbeat_time"    />
+        <result property="popupWindowTime"    column="popup_window_time"    />
+        <result property="minFace"    column="min_face"    />
+        <result property="maxFace"    column="max_face"    />
+        <result property="controllerOpeningTime"    column="controller_opening_time"    />
+    </resultMap>
+
+    <sql id="selectEquipmentVo">
+        select id, name, IP_address, creat_time, is_delete, identify_ways, face_library, is_living, infrared_camera, snap, similarity, synchronization_time, heartbeat_time, popup_window_time, min_face, max_face, controller_opening_time from equipment
+    </sql>
+
+    <select id="selectEquipmentList" parameterType="Equipment" resultMap="EquipmentResult">
+        <include refid="selectEquipmentVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="ipAddress != null  and ipAddress != ''"> and IP_address = #{ipAddress}</if>
+            <if test="creatTime != null "> and creat_time = #{creatTime}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+            <if test="identifyWays != null "> and identify_ways = #{identifyWays}</if>
+            <if test="faceLibrary != null  and faceLibrary != ''"> and face_library = #{faceLibrary}</if>
+            <if test="isLiving != null "> and is_living = #{isLiving}</if>
+            <if test="infraredCamera != null "> and infrared_camera = #{infraredCamera}</if>
+            <if test="snap != null "> and snap = #{snap}</if>
+            <if test="similarity != null "> and similarity = #{similarity}</if>
+            <if test="synchronizationTime != null "> and synchronization_time = #{synchronizationTime}</if>
+            <if test="heartbeatTime != null "> and heartbeat_time = #{heartbeatTime}</if>
+            <if test="popupWindowTime != null "> and popup_window_time = #{popupWindowTime}</if>
+            <if test="minFace != null "> and min_face = #{minFace}</if>
+            <if test="maxFace != null "> and max_face = #{maxFace}</if>
+            <if test="controllerOpeningTime != null "> and controller_opening_time = #{controllerOpeningTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipmentById" parameterType="String" resultMap="EquipmentResult">
+        <include refid="selectEquipmentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEquipment" parameterType="Equipment">
+        insert into equipment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="ipAddress != null and ipAddress != ''">IP_address,</if>
+            <if test="creatTime != null">creat_time,</if>
+            <if test="isDelete != null">is_delete,</if>
+            <if test="identifyWays != null">identify_ways,</if>
+            <if test="faceLibrary != null and faceLibrary != ''">face_library,</if>
+            <if test="isLiving != null">is_living,</if>
+            <if test="infraredCamera != null">infrared_camera,</if>
+            <if test="snap != null">snap,</if>
+            <if test="similarity != null">similarity,</if>
+            <if test="synchronizationTime != null">synchronization_time,</if>
+            <if test="heartbeatTime != null">heartbeat_time,</if>
+            <if test="popupWindowTime != null">popup_window_time,</if>
+            <if test="minFace != null">min_face,</if>
+            <if test="maxFace != null">max_face,</if>
+            <if test="controllerOpeningTime != null">controller_opening_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="ipAddress != null and ipAddress != ''">#{ipAddress},</if>
+            <if test="creatTime != null">#{creatTime},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+            <if test="identifyWays != null">#{identifyWays},</if>
+            <if test="faceLibrary != null and faceLibrary != ''">#{faceLibrary},</if>
+            <if test="isLiving != null">#{isLiving},</if>
+            <if test="infraredCamera != null">#{infraredCamera},</if>
+            <if test="snap != null">#{snap},</if>
+            <if test="similarity != null">#{similarity},</if>
+            <if test="synchronizationTime != null">#{synchronizationTime},</if>
+            <if test="heartbeatTime != null">#{heartbeatTime},</if>
+            <if test="popupWindowTime != null">#{popupWindowTime},</if>
+            <if test="minFace != null">#{minFace},</if>
+            <if test="maxFace != null">#{maxFace},</if>
+            <if test="controllerOpeningTime != null">#{controllerOpeningTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipment" parameterType="Equipment">
+        update equipment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="ipAddress != null and ipAddress != ''">IP_address = #{ipAddress},</if>
+            <if test="creatTime != null">creat_time = #{creatTime},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            <if test="identifyWays != null">identify_ways = #{identifyWays},</if>
+            <if test="faceLibrary != null and faceLibrary != ''">face_library = #{faceLibrary},</if>
+            <if test="isLiving != null">is_living = #{isLiving},</if>
+            <if test="infraredCamera != null">infrared_camera = #{infraredCamera},</if>
+            <if test="snap != null">snap = #{snap},</if>
+            <if test="similarity != null">similarity = #{similarity},</if>
+            <if test="synchronizationTime != null">synchronization_time = #{synchronizationTime},</if>
+            <if test="heartbeatTime != null">heartbeat_time = #{heartbeatTime},</if>
+            <if test="popupWindowTime != null">popup_window_time = #{popupWindowTime},</if>
+            <if test="minFace != null">min_face = #{minFace},</if>
+            <if test="maxFace != null">max_face = #{maxFace},</if>
+            <if test="controllerOpeningTime != null">controller_opening_time = #{controllerOpeningTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEquipmentById" parameterType="String">
+        delete from equipment where id = #{id}
+    </delete>
+
+    <delete id="deleteEquipmentByIds" parameterType="String">
+        delete from equipment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
