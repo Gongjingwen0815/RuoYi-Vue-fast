@@ -60,4 +60,10 @@ public interface IEquipmentService
      * @return 结果
      */
     public int deleteEquipmentById(String id);
+    /**
+     *  批量逻辑删除
+     * @param ids
+     * @return
+     */
+    public int updateEquipmentByIds(String[] ids);
 }

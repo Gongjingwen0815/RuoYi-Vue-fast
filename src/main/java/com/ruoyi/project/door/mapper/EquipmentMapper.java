@@ -60,4 +60,11 @@ public interface EquipmentMapper
      * @return 结果
      */
     public int deleteEquipmentByIds(String[] ids);
+
+    /**
+     *  批量逻辑删除
+     * @param ids
+     * @return
+     */
+    public int updateEquipmentByIds(String[] ids);
 }

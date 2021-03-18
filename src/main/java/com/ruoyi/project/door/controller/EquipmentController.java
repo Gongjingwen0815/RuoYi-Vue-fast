@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.ruoyi.project.door.domain.Equipment;
 import com.ruoyi.project.door.service.IEquipmentService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,25 +26,29 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.web.page.TableDataInfo;
 
 /**
- * 【请填写功能名称】Controller
+ * 【门禁机】Controller
  * 
  * @author ruoyi
  * @date 2021-03-18
  */
 @RestController
 @RequestMapping("/system/equipment")
+@Api(tags = "门禁设备管理")
 public class EquipmentController extends BaseController
 {
     @Autowired
     private IEquipmentService equipmentService;
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询【门禁机】列表
      */
     @PreAuthorize("@ss.hasPermi('system:equipment:list')")
     @GetMapping("/list")
+    @ApiOperation(value = "门禁机列表")
     public TableDataInfo list(Equipment equipment)
     {
+        //isDelete=0时，表示这个数据存在，当删除时，把isDelete设置为0
+        equipment.setIsDelete(0);
         startPage();
         List<Equipment> list = equipmentService.selectEquipmentList(equipment);
         return getDataTable(list);
@@ -71,12 +78,13 @@ public class EquipmentController extends BaseController
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增【门禁机设备】
      */
     @PreAuthorize("@ss.hasPermi('system:equipment:add')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Equipment equipment)
+    @ApiOperation(value = "门禁机添加")
+    public AjaxResult add(@Validated Equipment equipment)
     {
         return toAjax(equipmentService.insertEquipment(equipment));
     }
@@ -98,8 +106,10 @@ public class EquipmentController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:equipment:remove')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
+    @ApiOperation(value = "批量删除设备")
     public AjaxResult remove(@PathVariable String[] ids)
     {
-        return toAjax(equipmentService.deleteEquipmentByIds(ids));
+//        return toAjax(equipmentService.deleteEquipmentByIds(ids));
+        return toAjax(equipmentService.updateEquipmentByIds(ids));
     }
 }

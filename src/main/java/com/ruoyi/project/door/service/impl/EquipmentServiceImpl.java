@@ -92,4 +92,14 @@ public class EquipmentServiceImpl implements IEquipmentService
     {
         return equipmentMapper.deleteEquipmentById(id);
     }
+
+    /**
+     * 批量逻辑删除
+     * @param ids
+     * @return
+     */
+    @Override
+    public int updateEquipmentByIds(String[] ids) {
+        return equipmentMapper.updateEquipmentByIds(ids);
+    }
 }

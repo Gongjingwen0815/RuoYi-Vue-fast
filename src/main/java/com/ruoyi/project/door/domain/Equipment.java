@@ -14,7 +14,7 @@ import com.ruoyi.framework.web.domain.BaseEntity;
  * @author ruoyi
  * @date 2021-03-18
  */
-public class Equipment extends BaseEntity
+public class Equipment
 {
     private static final long serialVersionUID = 1L;
 
@@ -36,11 +36,11 @@ public class Equipment extends BaseEntity
 
     /** 删除标志 */
     @Excel(name = "删除标志")
-    private Long isDelete;
+    private Integer isDelete;
 
     /** 识别方式 */
     @Excel(name = "识别方式")
-    private Long identifyWays;
+    private Integer identifyWays;
 
     /** 人脸库 */
     @Excel(name = "人脸库")
@@ -48,15 +48,15 @@ public class Equipment extends BaseEntity
 
     /** 是否活体 */
     @Excel(name = "是否活体")
-    private Long isLiving;
+    private Integer isLiving;
 
     /** 是否开启红外摄像头 */
     @Excel(name = "是否开启红外摄像头")
-    private Long infraredCamera;
+    private Integer infraredCamera;
 
     /** 是否抓拍 */
     @Excel(name = "是否抓拍")
-    private Long snap;
+    private Integer snap;
 
     /** 相似度 */
     @Excel(name = "相似度")
@@ -122,21 +122,21 @@ public class Equipment extends BaseEntity
     {
         return creatTime;
     }
-    public void setIsDelete(Long isDelete) 
+    public void setIsDelete(Integer isDelete)
     {
         this.isDelete = isDelete;
     }
 
-    public Long getIsDelete() 
+    public Integer getIsDelete()
     {
         return isDelete;
     }
-    public void setIdentifyWays(Long identifyWays) 
+    public void setIdentifyWays(Integer identifyWays)
     {
         this.identifyWays = identifyWays;
     }
 
-    public Long getIdentifyWays() 
+    public Integer getIdentifyWays()
     {
         return identifyWays;
     }
@@ -149,30 +149,30 @@ public class Equipment extends BaseEntity
     {
         return faceLibrary;
     }
-    public void setIsLiving(Long isLiving) 
+    public void setIsLiving(Integer isLiving)
     {
         this.isLiving = isLiving;
     }
 
-    public Long getIsLiving() 
+    public Integer getIsLiving()
     {
         return isLiving;
     }
-    public void setInfraredCamera(Long infraredCamera) 
+    public void setInfraredCamera(Integer infraredCamera)
     {
         this.infraredCamera = infraredCamera;
     }
 
-    public Long getInfraredCamera() 
+    public Integer getInfraredCamera()
     {
         return infraredCamera;
     }
-    public void setSnap(Long snap) 
+    public void setSnap(Integer snap)
     {
         this.snap = snap;
     }
 
-    public Long getSnap() 
+    public Integer getSnap()
     {
         return snap;
     }
